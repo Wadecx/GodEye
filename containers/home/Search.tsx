@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import PixelBlast from "@/components/PixelBlast";
 import { SearchResults, BreachResult } from "@/components/SearchResults";
+import ColorBends from "@/components/ui/ColorBends";
 
 export const Search = () => {
   const [query, setQuery] = useState("");
@@ -22,18 +22,23 @@ export const Search = () => {
     setHasSearched(true);
 
     try {
-      const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
+      const response = await fetch(
+        `/api/search?q=${encodeURIComponent(query)}`,
+      );
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Erreur lors de la recherche');
+        throw new Error(data.error || "Erreur lors de la recherche");
       }
 
       // Adapter selon la structure de réponse de l'API
-      const breachResults = data.data?.results || data.results || data.data || [];
-      setResults(Array.isArray(breachResults) ? breachResults : [breachResults]);
+      const breachResults =
+        data.data?.results || data.results || data.data || [];
+      setResults(
+        Array.isArray(breachResults) ? breachResults : [breachResults],
+      );
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Une erreur est survenue');
+      setError(err instanceof Error ? err.message : "Une erreur est survenue");
       setResults([]);
     } finally {
       setLoading(false);
@@ -48,32 +53,26 @@ export const Search = () => {
 
   return (
     <div className="relative w-full min-h-screen">
-      {/* Background PixelBlast */}
-      <div className="absolute inset-0">
-        <PixelBlast
-          variant="square"
-          pixelSize={4}
-          color="#10002d"
-          patternScale={2}
-          patternDensity={1}
-          pixelSizeJitter={0}
-          enableRipples
-          rippleSpeed={0.4}
-          rippleThickness={0.12}
-          rippleIntensityScale={1.5}
-          liquid={false}
-          liquidStrength={0.12}
-          liquidRadius={1.2}
-          liquidWobbleSpeed={5}
-          speed={0.5}
-          edgeFade={0.25}
+      <div className="fixed inset-0">
+        <ColorBends
+          colors={["#ff5c7a", "#8a5cff", "#00ffd1"]}
+          rotation={50}
+          speed={0.1}
+          scale={1}
+          frequency={1}
+          warpStrength={1}
+          mouseInfluence={0}
+          parallax={0.1}
+          noise={0.1}
           transparent
+          autoRotate={0}
+          // color="#060010"
         />
       </div>
 
-      <div className="relative z-10 flex flex-col items-center pt-32 pb-8">
+      <div className="relative z-10 flex flex-col items-center pt-58 pb-8">
         <h2 className="text-white text-3xl font-bold uppercase text-center px-4 mb-8">
-          GodEye, une recherche <br/> des résultats.
+          GodEye, une recherche <br /> des résultats.
         </h2>
 
         <form onSubmit={handleSearch} className="w-full max-w-2xl px-4">
@@ -113,7 +112,8 @@ export const Search = () => {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Rechercher une personne, un email etc..."
-                className="w-full py-4 pr-5 bg-transparent text-white placeholder-gray-400 focus:outline-none text-lg"
+                autoComplete="off"
+                className="w-full py-4 pr-5 bg-transparent text-white placeholder-gray-400 focus:outline-none text-lg [&:-webkit-autofill]:bg-transparent [&:-webkit-autofill]:[-webkit-box-shadow:0_0_0_1000px_transparent_inset] [&:-webkit-autofill]:[-webkit-text-fill-color:white]"
               />
 
               <button
