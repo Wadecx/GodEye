@@ -266,8 +266,8 @@ export function SearchResults({
       </div>
 
       {/* Results */}
-      <ScrollArea className="max-h-[600px]">
-        <div className="space-y-4 pr-2">
+      <ScrollArea className="max-h-[600px] custom-scrollbar">
+        <div className="space-y-4 pr-4">
           {results.map((result, index) => (
             <ResultCard key={result.id || index} result={result} index={index} />
           ))}
