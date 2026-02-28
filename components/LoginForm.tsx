@@ -169,7 +169,7 @@ export function LoginForm() {
           </form>
 
           {/* Register link */}
-          <div className="mt-6 text-center">
+          {/* <div className="mt-6 text-center">
             <p className="text-gray-400 text-sm">
               Pas encore de compte ?{" "}
               <Link
@@ -179,7 +179,7 @@ export function LoginForm() {
                 Créer un compte
               </Link>
             </p>
-          </div>
+          </div> */}
         </CardContent>
       </Card>
     </div>
